@@ -118,6 +118,11 @@
             border-radius: 5px;
             font-size: 1rem;
         }
+        #fileCount {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #61dafb;
+        }
     </style>
 </head>
 <body>
@@ -131,6 +136,7 @@
                 </div>
                 <button type="button" onclick="uploadFiles()">Upload</button>
             </div>
+            <div id="fileCount">No files selected</div>
         </div>
         <div class="form-container">
             <span class="clear-link" onclick="attemptClearGallery()">Clear Gallery</span>
@@ -142,13 +148,24 @@
         <div id="gallery"></div>
     </div>
     <script>
+        let uploadedFiles = [];
+
+        document.getElementById('fileInput').addEventListener('change', function() {
+            const input = document.getElementById('fileInput');
+            const files = input.files;
+            document.getElementById('fileCount').innerText = `${files.length} file(s) selected`;
+        });
+
         async function uploadFiles() {
             const input = document.getElementById('fileInput');
             const files = input.files;
             const formData = new FormData();
 
             for (let i = 0; i < files.length; i++) {
-                formData.append('photos', files[i]);
+                if (!uploadedFiles.includes(files[i].name)) {
+                    formData.append('photos', files[i]);
+                    uploadedFiles.push(files[i].name);
+                }
             }
 
             try {
@@ -220,3 +237,4 @@
     </script>
 </body>
 </html>
+
