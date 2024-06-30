@@ -1,58 +1,63 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zábavná Stránka</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #ff6347;
-            color: white;
-            padding: 20px 0;
-        }
-        main {
-            padding: 20px;
-        }
-        button {
-            background-color: #4caf50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>Photo Upload</title>
 </head>
 <body>
-    <header>
-        <h1>Vítejte na zábavné stránce!</h1>
-    </header>
-    <main>
-        <p>Klikněte na tlačítko a uvidíte vtip:</p>
-        <button onclick="showJoke()">Zobraz vtip</button>
-        <p id="joke"></p>
-    </main>
+    <h1>Upload your photos</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" multiple>
+        <button type="button" onclick="uploadFiles()">Upload</button>
+    </form>
+    <div id="gallery"></div>
     <script>
-        const jokes = [
-            "Proč nemůže skelet hrát na klavír? Protože nemá žádné orgány!",
-            "Proč se matematické knihy vždy cítí špatně? Protože mají příliš mnoho problémů.",
-            "Co říká nula osmičce? Hezký pásek!"
-        ];
+        async function uploadFiles() {
+            const input = document.getElementById('fileInput');
+            const files = input.files;
+            const formData = new FormData();
 
-        function showJoke() {
-            const randomIndex = Math.floor(Math.random() * jokes.length);
-            document.getElementById('joke').innerText = jokes[randomIndex];
+            for (let i = 0; i < files.length; i++) {
+                formData.append('photos', files[i]);
+            }
+
+            try {
+                const response = await fetch('https://petalite-jagged-manager.glitch.me', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert('Photos uploaded successfully!');
+                    loadGallery();
+                } else {
+                    alert('Failed to upload photos');
+                }
+            } catch (error) {
+                console.error('Error uploading files:', error);
+                alert('Error uploading files');
+            }
         }
+
+        async function loadGallery() {
+            try {
+                const response = await fetch('https://your-glitch-project-url.glitch.me/photos');
+                const photos = await response.json();
+                const gallery = document.getElementById('gallery');
+                gallery.innerHTML = '';
+                photos.forEach(photo => {
+                    const img = document.createElement('img');
+                    img.src = photo.url;
+                    img.alt = photo.name;
+                    gallery.appendChild(img);
+                });
+            } catch (error) {
+                console.error('Error loading gallery:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadGallery);
     </script>
 </body>
 </html>
