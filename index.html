@@ -23,7 +23,7 @@
             }
 
             try {
-                const response = await fetch('https://cooperative-seasoned-cappelletti.glitch.me', {
+                const response = await fetch('https://prong-atlantic-furniture.glitch.me/upload', {
                     method: 'POST',
                     body: formData
                 });
@@ -42,7 +42,7 @@
 
         async function loadGallery() {
             try {
-                const response = await fetch('https://cooperative-seasoned-cappelletti.glitch.me');
+                const response = await fetch('https://prong-atlantic-furniture.glitch.me/photos');
                 const photos = await response.json();
                 const gallery = document.getElementById('gallery');
                 gallery.innerHTML = '';
