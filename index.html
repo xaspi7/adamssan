@@ -1,41 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Gallery</title>
+    <title>Fotogalerie Party</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #282c34;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #2c3e50;
+            color: #ecf0f1;
             margin: 0;
             padding: 0;
-            color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            background-image: url('party-background.jpg'); /* Změnit na URL vaší party obrázku */
+            background-size: cover;
+            background-position: center;
         }
         h1 {
             margin: 20px 0;
             font-size: 3rem;
-            color: #61dafb;
+            color: #e74c3c;
             text-align: center;
+            text-shadow: 2px 2px 4px #000;
         }
         .container {
             width: 100%;
             max-width: 1200px;
             padding: 20px;
             box-sizing: border-box;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
         }
         .form-container {
-            background-color: #20232a;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             margin-bottom: 20px;
             text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
         }
         .button-container {
             display: flex;
@@ -51,8 +57,8 @@
         .file-upload {
             font-size: 1rem;
             padding: 10px 20px;
-            color: #282c34;
-            background-color: #61dafb;
+            color: #ecf0f1;
+            background-color: #e74c3c;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -67,8 +73,8 @@
             width: 100%;
         }
         button {
-            background-color: #61dafb;
-            color: #282c34;
+            background-color: #e74c3c;
+            color: #ecf0f1;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -77,7 +83,7 @@
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #21a1f1;
+            background-color: #c0392b;
         }
         #gallery {
             display: grid;
@@ -97,13 +103,13 @@
             transform: scale(1.05);
         }
         .clear-link {
-            color: #61dafb;
+            color: #e74c3c;
             cursor: pointer;
             text-decoration: underline;
             font-size: 0.9rem;
         }
         .clear-link:hover {
-            color: #21a1f1;
+            color: #c0392b;
         }
         #passwordContainer {
             margin-top: 10px;
@@ -121,28 +127,28 @@
         #fileCount {
             margin-top: 10px;
             font-size: 1rem;
-            color: #61dafb;
+            color: #ecf0f1;
         }
     </style>
 </head>
 <body>
-    <h1>Photo Gallery</h1>
+    <h1>Fotogalerie Party</h1>
     <div class="container">
         <div class="form-container">
             <div class="button-container">
                 <div class="file-upload-wrapper">
-                    <button class="file-upload">Choose Files</button>
+                    <button class="file-upload">Vybrat soubory</button>
                     <input type="file" id="fileInput" accept="image/*" multiple>
                 </div>
-                <button type="button" onclick="uploadFiles()">Upload</button>
+                <button type="button" onclick="uploadFiles()">Nahrát</button>
             </div>
-            <div id="fileCount">No files selected</div>
+            <div id="fileCount">Žádné soubory vybrány</div>
         </div>
         <div class="form-container">
-            <span class="clear-link" onclick="attemptClearGallery()">Clear Gallery</span>
+            <span class="clear-link" onclick="attemptClearGallery()">Vymazat galerii</span>
             <div id="passwordContainer">
-                <input type="password" id="passwordInput" placeholder="Enter password">
-                <button type="button" onclick="clearGallery()">Confirm</button>
+                <input type="password" id="passwordInput" placeholder="Zadejte heslo">
+                <button type="button" onclick="clearGallery()">Potvrdit</button>
             </div>
         </div>
         <div id="gallery"></div>
@@ -153,7 +159,7 @@
         document.getElementById('fileInput').addEventListener('change', function() {
             const input = document.getElementById('fileInput');
             const files = input.files;
-            document.getElementById('fileCount').innerText = `${files.length} file(s) selected`;
+            document.getElementById('fileCount').innerText = `${files.length} soubor(y) vybrány`;
         });
 
         async function uploadFiles() {
@@ -175,14 +181,17 @@
                 });
 
                 if (response.ok) {
-                    alert('Photos uploaded successfully!');
+                    alert('Fotografie úspěšně nahrány!');
                     loadGallery();
+                    // Vymazání výběru souborů
+                    input.value = '';
+                    document.getElementById('fileCount').innerText = 'Žádné soubory vybrány';
                 } else {
-                    alert('Failed to upload photos');
+                    alert('Nahrání fotografií selhalo');
                 }
             } catch (error) {
-                console.error('Error uploading files:', error);
-                alert('Error uploading files');
+                console.error('Chyba při nahrávání souborů:', error);
+                alert('Chyba při nahrávání souborů');
             }
         }
 
@@ -199,7 +208,7 @@
                     gallery.appendChild(img);
                 });
             } catch (error) {
-                console.error('Error loading gallery:', error);
+                console.error('Chyba při načítání galerie:', error);
             }
         }
 
@@ -220,16 +229,16 @@
                 });
 
                 if (response.ok) {
-                    alert('Gallery cleared successfully!');
+                    alert('Galerie úspěšně vymazána!');
                     loadGallery();
                     document.getElementById('passwordContainer').style.display = 'none';
                     document.getElementById('passwordInput').value = '';
                 } else {
-                    alert('Failed to clear gallery');
+                    alert('Vymazání galerie selhalo');
                 }
             } catch (error) {
-                console.error('Error clearing gallery:', error);
-                alert('Error clearing gallery');
+                console.error('Chyba při vymazání galerie:', error);
+                alert('Chyba při vymazání galerie');
             }
         }
 
@@ -237,4 +246,3 @@
     </script>
 </body>
 </html>
-
