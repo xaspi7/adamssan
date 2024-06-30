@@ -9,39 +9,37 @@
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         h1 {
-            margin-top: 20px;
+            margin-bottom: 20px;
             color: #333;
         }
-        form {
+        .form-container {
+            width: 100%;
+            max-width: 500px;
             background-color: #fff;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+            text-align: center;
         }
-        input[type="file"] {
-            display: block;
-            margin-bottom: 10px;
-        }
-        input[type="password"] {
-            display: block;
+        input[type="file"], button {
+            width: 100%;
             margin-bottom: 10px;
             padding: 10px;
-            width: calc(100% - 22px);
+            border-radius: 5px;
+            border: 1px solid #ccc;
             box-sizing: border-box;
         }
         button {
             background-color: #007BFF;
             color: #fff;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
             cursor: pointer;
         }
         button:hover {
@@ -54,28 +52,37 @@
             justify-content: center;
         }
         #gallery img {
+            width: calc(33.333% - 10px);
             max-width: 100%;
             height: auto;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         @media (max-width: 600px) {
-            form, #gallery {
-                width: 90%;
+            #gallery img {
+                width: calc(50% - 10px);
             }
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <h1>Upload your photos</h1>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" id="fileInput" accept="image/*" multiple>
-        <button type="button" onclick="uploadFiles()">Upload</button>
-    </form>
-    <form id="clearForm">
-        <input type="password" id="passwordInput" placeholder="Enter password">
-        <button type="button" onclick="clearGallery()">Clear Gallery</button>
-    </form>
+    <h1>Upload Your Photos</h1>
+    <div class="form-container">
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="fileInput" accept="image/*" multiple>
+            <button type="button" onclick="uploadFiles()">Upload</button>
+        </form>
+    </div>
+    <div class="form-container">
+        <button type="button" onclick="attemptClearGallery()">Clear Gallery</button>
+        <div id="passwordContainer" class="hidden">
+            <input type="password" id="passwordInput" placeholder="Enter password">
+            <button type="button" onclick="clearGallery()">Confirm</button>
+        </div>
+    </div>
     <div id="gallery"></div>
     <script>
         async function uploadFiles() {
@@ -122,6 +129,10 @@
             }
         }
 
+        function attemptClearGallery() {
+            document.getElementById('passwordContainer').classList.remove('hidden');
+        }
+
         async function clearGallery() {
             const password = document.getElementById('passwordInput').value;
 
@@ -137,6 +148,8 @@
                 if (response.ok) {
                     alert('Gallery cleared successfully!');
                     loadGallery();
+                    document.getElementById('passwordContainer').classList.add('hidden');
+                    document.getElementById('passwordInput').value = '';
                 } else {
                     alert('Failed to clear gallery');
                 }
