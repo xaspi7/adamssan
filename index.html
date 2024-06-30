@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zábavná Stránka</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ff6347;
+            color: white;
+            padding: 20px 0;
+        }
+        main {
+            padding: 20px;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Vítejte na zábavné stránce!</h1>
+    </header>
+    <main>
+        <p>Klikněte na tlačítko a uvidíte vtip:</p>
+        <button onclick="showJoke()">Zobraz vtip</button>
+        <p id="joke"></p>
+    </main>
+    <script>
+        const jokes = [
+            "Proč nemůže skelet hrát na klavír? Protože nemá žádné orgány!",
+            "Proč se matematické knihy vždy cítí špatně? Protože mají příliš mnoho problémů.",
+            "Co říká nula osmičce? Hezký pásek!"
+        ];
+
+        function showJoke() {
+            const randomIndex = Math.floor(Math.random() * jokes.length);
+            document.getElementById('joke').innerText = jokes[randomIndex];
+        }
+    </script>
+</body>
+</html>
