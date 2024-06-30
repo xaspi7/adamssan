@@ -21,6 +21,7 @@
             margin: 20px 0;
             font-size: 3rem;
             color: #61dafb;
+            text-align: center;
         }
         .container {
             width: 100%;
@@ -29,13 +30,18 @@
             box-sizing: border-box;
         }
         .form-container {
-            width: 100%;
             background-color: #20232a;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             margin-bottom: 20px;
             text-align: center;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 10px;
         }
         .file-upload-wrapper {
             position: relative;
@@ -64,12 +70,11 @@
             background-color: #61dafb;
             color: #282c34;
             border: none;
-            padding: 15px 30px;
+            padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: background-color 0.3s;
-            margin-top: 10px;
         }
         button:hover {
             background-color: #21a1f1;
@@ -77,11 +82,13 @@
         #gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
+            gap: 10px;
             width: 100%;
         }
         #gallery img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s;
@@ -89,16 +96,11 @@
         #gallery img:hover {
             transform: scale(1.05);
         }
-        .hidden {
-            display: none;
-        }
         .clear-link {
             color: #61dafb;
             cursor: pointer;
             text-decoration: underline;
             font-size: 0.9rem;
-            display: block;
-            margin-top: 10px;
         }
         .clear-link:hover {
             color: #21a1f1;
@@ -122,13 +124,13 @@
     <h1>Photo Gallery</h1>
     <div class="container">
         <div class="form-container">
-            <form id="uploadForm" enctype="multipart/form-data">
+            <div class="button-container">
                 <div class="file-upload-wrapper">
                     <button class="file-upload">Choose Files</button>
                     <input type="file" id="fileInput" accept="image/*" multiple>
                 </div>
                 <button type="button" onclick="uploadFiles()">Upload</button>
-            </form>
+            </div>
         </div>
         <div class="form-container">
             <span class="clear-link" onclick="attemptClearGallery()">Clear Gallery</span>
