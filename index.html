@@ -86,25 +86,22 @@
             background-color: #c0392b;
         }
         #gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
             width: 100%;
         }
-        .grid {
+        #gallery img {
             width: 100%;
-        }
-        .grid-item {
-            margin-bottom: 10px;
-            break-inside: avoid;
-            object-fit: contain;
+            height: auto;
+            object-fit: contain; /* Upraveno na contain */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s;
-            background-color: #fff;
+            background-color: #fff; /* Přidáno pozadí, aby byl viditelný prázdný prostor */
         }
-        .grid-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 10px;
+        #gallery img:hover {
+            transform: scale(1.05);
         }
         .clear-link {
             color: #e74c3c;
@@ -188,7 +185,10 @@
                 font-size: 0.8rem;
                 padding: 8px 16px;
             }
-            .grid-item {
+            #gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            #gallery img {
                 border-radius: 5px;
             }
         }
@@ -211,7 +211,7 @@
         <div class="form-container">
             <span class="clear-link" onclick="attemptClearGallery()">Vymazat galerii</span>
         </div>
-        <div id="gallery" class="grid"></div>
+        <div id="gallery"></div>
     </div>
     <div id="passwordOverlay" onclick="closePasswordContainer()"></div>
     <div id="passwordContainer">
@@ -220,14 +220,13 @@
     </div>
     <div id="loadingOverlay"></div>
     <div id="loadingIndicator">Nahrávání...</div>
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script>
         let uploadedFiles = [];
 
         document.getElementById('fileInput').addEventListener('change', function() {
             const input = document.getElementById('fileInput');
             const files = input.files;
-            document.getElementById('fileCount').innerText = `${files.length} soubor(y) vybrány`;
+            document.getElementById('fileCount').innerText = ${files.length} soubor(y) vybrány;
         });
 
         async function uploadFiles() {
@@ -279,19 +278,10 @@
                 const gallery = document.getElementById('gallery');
                 gallery.innerHTML = '';
                 photos.forEach(photo => {
-                    const div = document.createElement('div');
-                    div.className = 'grid-item';
                     const img = document.createElement('img');
                     img.src = photo.url;
                     img.alt = photo.name;
-                    div.appendChild(img);
-                    gallery.appendChild(div);
-                });
-                // Initialize Masonry after adding the images
-                new Masonry(gallery, {
-                    itemSelector: '.grid-item',
-                    columnWidth: '.grid-item',
-                    percentPosition: true
+                    gallery.appendChild(img);
                 });
             } catch (error) {
                 console.error('Chyba při načítání galerie:', error);
