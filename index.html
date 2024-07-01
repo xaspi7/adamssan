@@ -85,6 +85,22 @@
         button:hover {
             background-color: #c0392b;
         }
+        .clear-button {
+            background-color: transparent;
+            color: #ecf0f1;
+            border: 1px solid #ecf0f1;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            margin-top: 10px;
+        }
+        .clear-button:hover {
+            background-color: #c0392b;
+            color: #fff;
+            border-color: #c0392b;
+        }
         #gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -247,6 +263,7 @@
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
+            cursor: pointer;
         }
         .close:hover,
         .close:focus {
@@ -262,14 +279,14 @@
         <div class="form-container">
             <div class="button-container">
                 <div class="file-upload-wrapper">
-                    <button class="file-upload">Vybrat soubory</button>
-                    <input type="file" id="fileInput" accept="image/*" multiple>
+                    <button class="file-upload">Vyberte soubory</button>
+                    <input id="fileInput" type="file" accept="image/*" multiple>
                 </div>
                 <button onclick="uploadFiles()">Nahrát</button>
-                <button onclick="attemptClearGallery()">Vymazat galerii</button>
             </div>
             <div id="fileCount"></div>
             <div id="message"></div>
+            <button class="clear-button" onclick="attemptClearGallery()">Vymazat galerii</button>
         </div>
         <div id="gallery"></div>
     </div>
@@ -415,7 +432,7 @@
             captionText.innerText = name;
 
             downloadButton.href = url;
-            downloadButton.download = `${name}.jpg`; // Use filename with .jpg extension
+            downloadButton.download = name; // Use filename as is
         }
 
         function closeModal() {
