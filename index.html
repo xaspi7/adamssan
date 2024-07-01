@@ -226,7 +226,7 @@
         document.getElementById('fileInput').addEventListener('change', function() {
             const input = document.getElementById('fileInput');
             const files = input.files;
-            document.getElementById('fileCount').innerText = ${files.length} soubor(y) vybrány;
+            document.getElementById('fileCount').innerText = `${files.length} soubor(y) vybrány`;
         });
 
         async function uploadFiles() {
