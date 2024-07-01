@@ -88,13 +88,13 @@
         #gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 0; /* Nastavíme gap na 0, aby nebyly mezery mezi fotkami */
+            gap: 10px; /* Můžeme ponechat malé mezery mezi fotkami */
             width: 100%;
         }
         #gallery img {
             width: 100%;
-            height: auto;
-            object-fit: contain;
+            height: 200px; /* Nastavíme fixní výšku */
+            object-fit: cover; /* Fotky budou pokrývat celý dostupný prostor bez ohledu na původní rozměry */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s;
@@ -189,6 +189,7 @@
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
             #gallery img {
+                height: 150px; /* Zmenšíme výšku pro menší obrazovky */
                 border-radius: 5px;
             }
         }
