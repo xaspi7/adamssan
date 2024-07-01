@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotogalerie</title>
     <title>Fotogalerie Party</title>
     <style>
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #282c34;
             font-family: 'Comic Sans MS', cursive, sans-serif;
             background-color: #2c3e50;
             color: #ecf0f1;
             margin: 0;
             padding: 0;
+            color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -23,6 +25,7 @@
         h1 {
             margin: 20px 0;
             font-size: 3rem;
+            color: #61dafb;
             color: #e74c3c;
             text-align: center;
             text-shadow: 2px 2px 4px #000;
@@ -36,6 +39,7 @@
             border-radius: 15px;
         }
         .form-container {
+            background-color: #20232a;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -45,70 +49,49 @@
         }
         .button-container {
             display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .file-upload-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-        }
+@@ -51,8 +57,8 @@
         .file-upload {
             font-size: 1rem;
             padding: 10px 20px;
+            color: #282c34;
+            background-color: #61dafb;
             color: #ecf0f1;
             background-color: #e74c3c;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-        }
-        #fileInput {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-            height: 100%;
+@@ -67,8 +73,8 @@
             width: 100%;
         }
         button {
+            background-color: #61dafb;
+            color: #282c34;
             background-color: #e74c3c;
             color: #ecf0f1;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
+@@ -77,7 +83,7 @@
             transition: background-color 0.3s;
         }
         button:hover {
+            background-color: #21a1f1;
             background-color: #c0392b;
         }
         #gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            width: 100%;
-        }
-        #gallery img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s;
-        }
-        #gallery img:hover {
+@@ -97,19 +103,28 @@
             transform: scale(1.05);
         }
         .clear-link {
+            color: #61dafb;
             color: #e74c3c;
             cursor: pointer;
             text-decoration: underline;
             font-size: 0.9rem;
         }
         .clear-link:hover {
+            color: #21a1f1;
             color: #c0392b;
         }
         #passwordContainer {
@@ -128,8 +111,7 @@
         }
         #passwordInput {
             margin-bottom: 10px;
-            padding: 10px;
-            border: none;
+@@ -118,6 +133,11 @@
             border-radius: 5px;
             font-size: 1rem;
         }
@@ -141,11 +123,12 @@
         #passwordOverlay {
             position: fixed;
             top: 0;
-            left: 0;
-            width: 100%;
+@@ -126,8 +146,17 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             display: none;
+            justify-content: center;
+            align-items: center;
             z-index: 999;
         }
         #loadingIndicator {
@@ -160,34 +143,54 @@
         }
         #loadingOverlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+@@ -137,78 +166,59 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             display: none;
-            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
-        #notification {
+        .loading-indicator {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .notification {
             position: fixed;
-            top: 10px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: #ecf0f1;
-            padding: 10px;
+            top: 20px;
+            right: 20px;
+            background-color: #444;
+            color: white;
+            padding: 10px 20px;
             border-radius: 5px;
             display: none;
-            z-index: 1000;
+            z-index: 1001;
+        }
+        .notification.success {
+            background-color: #28a745;
+        }
+        .notification.error {
+            background-color: #dc3545;
+            z-index: 999;
         }
     </style>
 </head>
 <body>
+    <h1>Fotogalerie</h1>
     <h1>Fotogalerie Party</h1>
-    <div id="notification"></div>
     <div class="container">
         <div class="form-container">
             <div class="button-container">
                 <div class="file-upload-wrapper">
+                    <button class="file-upload">Vyberte fotky</button>
                     <button class="file-upload">Vybrat soubory</button>
                     <input type="file" id="fileInput" accept="image/*" multiple>
                 </div>
@@ -197,14 +200,21 @@
         </div>
         <div class="form-container">
             <span class="clear-link" onclick="attemptClearGallery()">Vymazat galerii</span>
+            <div id="passwordContainer">
+                <input type="password" id="passwordInput" placeholder="Zadejte heslo">
+                <button type="button" onclick="clearGallery()">Potvrdit</button>
+            </div>
         </div>
         <div id="gallery"></div>
     </div>
     <div id="passwordOverlay" onclick="closePasswordContainer()"></div>
+    <div id="loadingOverlay">
+        <div class="loading-indicator"></div>
     <div id="passwordContainer">
         <input type="password" id="passwordInput" placeholder="Zadejte heslo">
         <button type="button" onclick="clearGallery()">Potvrdit</button>
     </div>
+    <div id="notification" class="notification"></div>
     <div id="loadingOverlay"></div>
     <div id="loadingIndicator">Nahrávání...</div>
     <script>
@@ -216,115 +226,106 @@
             document.getElementById('fileCount').innerText = `${files.length} soubor(y) vybrány`;
         });
 
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            notification.innerText = message;
-            notification.style.display = 'block';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-        }
-
         async function uploadFiles() {
             const input = document.getElementById('fileInput');
             const files = input.files;
             const formData = new FormData();
 
             for (let i = 0; i < files.length; i++) {
+                formData.append('photos', files[i]);
                 if (!uploadedFiles.includes(files[i].name)) {
                     formData.append('photos', files[i]);
                     uploadedFiles.push(files[i].name);
                 }
             }
 
+            showLoading();
             // Zobrazit loading indikátor
             document.getElementById('loadingOverlay').style.display = 'block';
             document.getElementById('loadingIndicator').style.display = 'block';
 
             try {
-                const response = await fetch('https://prong-atlantic-furniture.glitch.me', { // Změňte na správné Glitch URL
-                    method: 'POST',
-                    body: formData
+                const response = await fetch('https://prong-atlantic-furniture.glitch.me/upload', {
+@@ -217,18 +227,22 @@ <h1>Fotogalerie</h1>
                 });
 
                 if (response.ok) {
-                    showNotification('Fotografie úspěšně nahrány!');
+                    showNotification('Fotky byly úspěšně nahrány!', 'success');
+                    alert('Fotografie úspěšně nahrány!');
                     loadGallery();
                     // Vymazání výběru souborů
                     input.value = '';
                     document.getElementById('fileCount').innerText = 'Žádné soubory vybrány';
                 } else {
-                    showNotification('Nahrání fotografií selhalo');
+                    showNotification('Nahrání fotek selhalo', 'error');
+                    alert('Nahrání fotografií selhalo');
                 }
             } catch (error) {
                 console.error('Chyba při nahrávání souborů:', error);
-                showNotification('Chyba při nahrávání souborů');
+                showNotification('Chyba při nahrávání souborů', 'error');
+                alert('Chyba při nahrávání souborů');
             } finally {
                 // Skrytí loading indikátoru
                 document.getElementById('loadingOverlay').style.display = 'none';
                 document.getElementById('loadingIndicator').style.display = 'none';
             }
+
+            hideLoading();
+            input.value = '';
         }
 
         async function loadGallery() {
-            try {
-                const response = await fetch('https://prong-atlantic-furniture.glitch.me'); // Změňte na správné Glitch URL
-
-                if (response.ok) {
-                    const photos = await response.json();
-                    const gallery = document.getElementById('gallery');
-                    gallery.innerHTML = '';
-                    photos.forEach(photo => {
-                        const img = document.createElement('img');
-                        img.src = photo.url;
-                        gallery.appendChild(img);
-                    });
-                } else {
-                    console.error('Failed to load gallery');
-                }
-            } catch (error) {
-                console.error('Chyba při načítání galerie:', error);
-            }
-        }
-
-        function attemptClearGallery() {
-            document.getElementById('passwordOverlay').style.display = 'block';
-            document.getElementById('passwordContainer').style.display = 'flex';
-        }
-
-        function closePasswordContainer() {
-            document.getElementById('passwordOverlay').style.display = 'none';
-            document.getElementById('passwordContainer').style.display = 'none';
-        }
-
+@@ -261,8 +275,6 @@ <h1>Fotogalerie</h1>
         async function clearGallery() {
             const password = document.getElementById('passwordInput').value;
 
+            showLoading();
+
             try {
-                const response = await fetch('https://prong-atlantic-furniture.glitch.me', { // Změňte na správné Glitch URL
+                const response = await fetch('https://prong-atlantic-furniture.glitch.me/clear', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ password })
+@@ -273,41 +285,20 @@ <h1>Fotogalerie</h1>
                 });
 
                 if (response.ok) {
-                    showNotification('Galerie byla úspěšně vymazána!');
+                    showNotification('Galerie byla úspěšně vymazána!', 'success');
+                    alert('Galerie byla úspěšně vymazána!');
                     loadGallery();
                     closePasswordContainer();
+                    document.getElementById('passwordInput').value = '';
                 } else {
-                    const errorData = await response.json();
-                    showNotification(`Chyba: ${errorData.error}`);
+                    showNotification('Vymazání galerie selhalo', 'error');
+                    alert('Vymazání galerie selhalo');
                 }
             } catch (error) {
-                console.error('Chyba při mazání galerie:', error);
-                showNotification('Chyba při mazání galerie');
+                console.error('Chyba při vymazávání galerie:', error);
+                showNotification('Chyba při vymazávání galerie', 'error');
+                console.error('Chyba při vymazání galerie:', error);
+                alert('Chyba při vymazání galerie');
             }
+
+            hideLoading();
         }
 
-        // Načtení galerie při načtení stránky
-        window.onload = loadGallery;
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification ' + type;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadGallery);
     </script>
 </body>
 </html>
