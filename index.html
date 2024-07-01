@@ -86,22 +86,25 @@
             background-color: #c0392b;
         }
         #gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
             width: 100%;
         }
-        #gallery img {
+        .grid {
             width: 100%;
-            height: auto;
-            object-fit: contain; /* Upraveno na contain */
+        }
+        .grid-item {
+            margin-bottom: 10px;
+            break-inside: avoid;
+            object-fit: contain;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s;
-            background-color: #fff; /* Přidáno pozadí, aby byl viditelný prázdný prostor */
+            background-color: #fff;
         }
-        #gallery img:hover {
-            transform: scale(1.05);
+        .grid-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
         }
         .clear-link {
             color: #e74c3c;
@@ -185,10 +188,7 @@
                 font-size: 0.8rem;
                 padding: 8px 16px;
             }
-            #gallery {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            #gallery img {
+            .grid-item {
                 border-radius: 5px;
             }
         }
@@ -211,7 +211,7 @@
         <div class="form-container">
             <span class="clear-link" onclick="attemptClearGallery()">Vymazat galerii</span>
         </div>
-        <div id="gallery"></div>
+        <div id="gallery" class="grid"></div>
     </div>
     <div id="passwordOverlay" onclick="closePasswordContainer()"></div>
     <div id="passwordContainer">
@@ -220,6 +220,7 @@
     </div>
     <div id="loadingOverlay"></div>
     <div id="loadingIndicator">Nahrávání...</div>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script>
         let uploadedFiles = [];
 
@@ -278,10 +279,19 @@
                 const gallery = document.getElementById('gallery');
                 gallery.innerHTML = '';
                 photos.forEach(photo => {
+                    const div = document.createElement('div');
+                    div.className = 'grid-item';
                     const img = document.createElement('img');
                     img.src = photo.url;
                     img.alt = photo.name;
-                    gallery.appendChild(img);
+                    div.appendChild(img);
+                    gallery.appendChild(div);
+                });
+                // Initialize Masonry after adding the images
+                new Masonry(gallery, {
+                    itemSelector: '.grid-item',
+                    columnWidth: '.grid-item',
+                    percentPosition: true
                 });
             } catch (error) {
                 console.error('Chyba při načítání galerie:', error);
