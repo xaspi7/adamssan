@@ -93,11 +93,12 @@
         }
         #gallery img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            object-fit: contain; /* Upraveno na contain */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s;
+            background-color: #fff; /* Přidáno pozadí, aby byl viditelný prázdný prostor */
         }
         #gallery img:hover {
             transform: scale(1.05);
@@ -175,6 +176,21 @@
             background: #f9f9f9;
             display: none; /* Skryjeme zprávu na začátku */
             border-radius: 5px;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            button, .file-upload {
+                font-size: 0.8rem;
+                padding: 8px 16px;
+            }
+            #gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            #gallery img {
+                border-radius: 5px;
+            }
         }
     </style>
 </head>
