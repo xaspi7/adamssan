@@ -1,220 +1,66 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fotogalerie Party</title>
+    <title>Photo Gallery</title>
     <style>
         body {
-            font-family: 'Comic Sans MS', sans-serif;
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            flex-direction: column;
             min-height: 100vh;
-            background-image: url('party-background.jpg'); 
-            background-size: cover;
-            background-position: center;
+            margin: 0;
+            background-color: #f0f0f0;
         }
         h1 {
-            margin: 20px 0;
-            font-size: 3rem;
-            color: #e74c3c;
-            text-align: center;
-            text-shadow: 2px 2px 4px #000;
-        }
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            padding: 20px;
-            box-sizing: border-box;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-        }
-        .form-container {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             margin-bottom: 20px;
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        .button-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .file-upload-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-        }
-        .file-upload {
-            font-size: 1rem;
-            padding: 10px 20px;
-            color: #ecf0f1;
-            background-color: #e74c3c;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #fileInput {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-            height: 100%;
-            width: 100%;
-        }
-        button {
-            background-color: #e74c3c;
-            color: #ecf0f1;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #c0392b;
-        }
-        .clear-button {
-            background-color: transparent;
-            color: #ecf0f1;
-            border: 1px solid #ecf0f1;
-            padding: 5px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-            margin-top: 10px;
-        }
-        .clear-button:hover {
-            background-color: #c0392b;
-            color: #fff;
-            border-color: #c0392b;
-        }
-        #gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            width: 100%;
-        }
-        #gallery img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s;
-            background-color: #fff;
-            cursor: pointer;
-        }
-        #gallery img:hover {
-            transform: scale(1.05);
-        }
-        .clear-link {
-            color: #e74c3c;
-            cursor: pointer;
-            text-decoration: underline;
-            font-size: 0.9rem;
-        }
-        .clear-link:hover {
-            color: #c0392b;
-        }
-        #passwordContainer {
-            margin-top: 10px;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-        #passwordInput {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-        #fileCount {
-            margin-top: 10px;
-            font-size: 1rem;
-            color: #ecf0f1;
-        }
-        #passwordOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 999;
-        }
-        #loadingIndicator {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            color: #fff;
-            display: none;
-            z-index: 1000;
-        }
-        #loadingOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 999;
         }
         #message {
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            background: #e74c3c;
-            color: #ecf0f1;
             display: none;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
             border-radius: 5px;
+            margin-bottom: 20px;
         }
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
-            button, .file-upload {
-                font-size: 0.8rem;
-                padding: 8px 16px;
-            }
-            #gallery {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            }
-            #gallery img {
-                height: 150px;
-                border-radius: 5px;
-            }
+        #fileInput {
+            display: none;
+        }
+        label {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #uploadButton, #clearButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        #gallery img {
+            max-width: 100px;
+            max-height: 100px;
+            cursor: pointer;
         }
         #modal {
             display: none;
             position: fixed;
             z-index: 1000;
+            padding-top: 60px;
             left: 0;
             top: 0;
             width: 100%;
@@ -229,27 +75,11 @@
             width: 80%;
             max-width: 700px;
         }
-        .modalButton {
-            display: block;
-            background-color: #e74c3c;
-            color: white;
-            text-align: center;
-            padding: 10px 20px;
-            margin: 20px auto;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            text-decoration: none;
-        }
-        .modalButton:hover {
-            background-color: #c0392b;
-        }
         .close {
             position: absolute;
             top: 15px;
             right: 35px;
-            color: #f1f1f1;
+            color: #fff;
             font-size: 40px;
             font-weight: bold;
             transition: 0.3s;
@@ -261,25 +91,72 @@
             text-decoration: none;
             cursor: pointer;
         }
+        .modalButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        #passwordOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+        #passwordContainer {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+        }
+        #loadingOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+        #loadingIndicator {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1002;
+        }
     </style>
 </head>
 <body>
-    <h1>Fotogalerie Party</h1>
-    <div class="container">
-        <div class="form-container">
-            <div class="button-container">
-                <div class="file-upload-wrapper">
-                    <button class="file-upload">Vyberte soubory</button>
-                    <input id="fileInput" type="file" accept="image/*" multiple>
-                </div>
-                <button onclick="uploadFiles()">Nahrát</button>
-            </div>
-            <div id="fileCount"></div>
-            <div id="message"></div>
-            <button class="clear-button" onclick="attemptClearGallery()">Vymazat galerii</button>
-        </div>
-        <div id="gallery"></div>
-    </div>
+    <h1>Photo Gallery</h1>
+    <div id="message"></div>
+    <input type="file" id="fileInput" multiple>
+    <label for="fileInput">Vyberte soubory</label>
+    <button id="uploadButton" onclick="uploadFiles()">Nahrát</button>
+    <button id="clearButton" onclick="attemptClearGallery()">Vymazat Galerii</button>
+    <div id="gallery"></div>
 
     <div id="passwordOverlay"></div>
     <div id="passwordContainer">
@@ -299,14 +176,8 @@
 
     <script>
         const fileInput = document.getElementById('fileInput');
-        const fileCountDiv = document.getElementById('fileCount');
         const messageDiv = document.getElementById('message');
         let uploadedFiles = [];
-
-        fileInput.addEventListener('change', () => {
-            const files = fileInput.files;
-            fileCountDiv.innerText = `${files.length} souborů vybráno.`;
-        });
 
         async function uploadFiles() {
             const files = fileInput.files;
@@ -331,6 +202,8 @@
                 const result = await response.json();
                 displayPhotos(result.photos);
                 messageDiv.innerText = 'Soubory byly úspěšně nahrány!';
+                messageDiv.style.backgroundColor = '#4CAF50';
+                messageDiv.style.color = 'white';
                 messageDiv.style.display = 'block';
                 setTimeout(() => {
                     messageDiv.style.display = 'none';
@@ -338,6 +211,8 @@
             } catch (error) {
                 console.error('Error uploading files:', error);
                 messageDiv.innerText = 'Chyba při nahrávání souborů.';
+                messageDiv.style.backgroundColor = '#f44336';
+                messageDiv.style.color = 'white';
                 messageDiv.style.display = 'block';
                 setTimeout(() => {
                     messageDiv.style.display = 'none';
@@ -396,50 +271,58 @@
                     body: JSON.stringify({ password })
                 });
                 const result = await response.json();
-                if (result.message === 'Gallery cleared') {
-                    document.getElementById('gallery').innerHTML = '';
+
+                if (response.ok) {
+                    displayPhotos([]);
+                    messageDiv.innerText = result.message;
+                    messageDiv.style.backgroundColor = '#4CAF50';
+                } else {
+                    messageDiv.innerText = result.error;
+                    messageDiv.style.backgroundColor = '#f44336';
                 }
-                closePasswordContainer();
-                alert(result.message);
+                messageDiv.style.color = 'white';
+                messageDiv.style.display = 'block';
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
             } catch (error) {
                 console.error('Error clearing gallery:', error);
-                alert('Failed to clear gallery');
+                messageDiv.innerText = 'Chyba při mazání galerie.';
+                messageDiv.style.backgroundColor = '#f44336';
+                messageDiv.style.color = 'white';
+                messageDiv.style.display = 'block';
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
             } finally {
                 document.getElementById('loadingOverlay').style.display = 'none';
                 document.getElementById('loadingIndicator').style.display = 'none';
+                closePasswordContainer();
             }
         }
 
         function openModal(url, name) {
             const modal = document.getElementById('modal');
-            const modalImg = document.getElementById('modalContent');
+            const modalContent = document.getElementById('modalContent');
             const downloadButton = document.getElementById('downloadButton');
 
             modal.style.display = 'block';
-            modalImg.src = url;
-
-            downloadButton.href = convertImageToJPG(url);
-            downloadButton.download = `${name.split('.')[0]}.jpg`; // Stáhnout jako jpg
+            modalContent.src = url;
+            downloadButton.href = url;
+            downloadButton.download = name.replace(/\.[^/.]+$/, "") + ".jpg";
         }
 
         function closeModal() {
-            document.getElementById('modal').style.display = 'none';
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
         }
 
-        function convertImageToJPG(url) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.crossOrigin = 'Anonymous';
-                img.src = url;
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-                    resolve(canvas.toDataURL('image/jpeg'));
-                };
-            });
+        // Close the modal when clicking outside of the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
         }
 
         fetchPhotos();
