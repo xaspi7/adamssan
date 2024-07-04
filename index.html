@@ -6,7 +6,7 @@
     <title>Fotogalerie Party</title>
     <style>
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Comic Sans MS', sans-serif; /* Změněno na normální text */
             background-color: #2c3e50;
             color: #ecf0f1;
             margin: 0;
@@ -190,7 +190,8 @@
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
-            background: #f9f9f9;
+            background: #e74c3c; /* Změna pozadí na červenou */
+            color: #ecf0f1; /* Změna textu na světlý */
             display: none; /* Skryjeme zprávu na začátku */
             border-radius: 5px;
         }
@@ -228,16 +229,6 @@
             display: block;
             width: 80%;
             max-width: 700px;
-        }
-        #caption {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-            text-align: center;
-            color: #ccc;
-            padding: 10px 0;
-            height: 150px;
         }
         .modalButton {
             display: block;
@@ -304,7 +295,6 @@
     <div id="modal">
         <span class="close" onclick="closeModal()">&times;</span>
         <img class="modal-content" id="modalContent">
-        <div id="caption"></div>
         <a id="downloadButton" class="modalButton" href="#" download>Stáhnout</a>
     </div>
 
@@ -424,15 +414,13 @@
         function openModal(url, name) {
             const modal = document.getElementById('modal');
             const modalImg = document.getElementById('modalContent');
-            const captionText = document.getElementById('caption');
             const downloadButton = document.getElementById('downloadButton');
 
             modal.style.display = 'block';
             modalImg.src = url;
-            captionText.innerText = name;
 
             downloadButton.href = url;
-            downloadButton.download = name; // Use filename as is
+            downloadButton.download = `${name.split('.')[0]}.jpg`; // Stáhnout jako jpg
         }
 
         function closeModal() {
